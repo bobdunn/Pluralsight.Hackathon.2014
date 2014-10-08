@@ -4,7 +4,7 @@ exports.motion = function(callback) {
     var prev_x = 0, prev_y = 0, prev_z = 0;
     var sense = 1;
     var timestamp = 0;
-    var timoutMicroseconds = 1000000;
+    var timoutMicroseconds = 100 * 1000;
 
 
     Leap.loop(function (frame) {
@@ -15,6 +15,7 @@ exports.motion = function(callback) {
             if (timestamp === 0) timestamp = frame.timestamp;
 
             if (frame.timestamp - timestamp > timoutMicroseconds) {
+                timestamp = frame.timestamp;
 
                 dx = pos[0] - prev_x;
                 if (Math.abs(dx) < sense) dx = 0;
