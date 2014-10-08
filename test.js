@@ -1,5 +1,7 @@
 var Cylon = require('cylon');
 var steer = require('./steer.js');
+var tweeter = require('./sphero-twitter.js');
+
 var speedDivisor = 5;
 
 
@@ -31,12 +33,12 @@ Cylon.robot({
   connection: { name: 'sphero', adaptor: 'sphero', port: 'COM5' },
   device: {name: 'sphero', driver: 'sphero'},
   work: function(my) {
-//	my.sphero.detectCollisions();
-//	my.sphero.on('collision', function(){
-//		console.log('bump');
-//		direction = direction +Math.floor((Math.random() * 180) + 90);
-//		direction %= 360;
-//	});
+	my.sphero.detectCollisions();
+
+	my.sphero.on('collision', function(){
+		console.log('bump');
+        tweeter.tweet('Ouch!!')
+	});
 
      calibrateAndStartReading(my.sphero);
 
