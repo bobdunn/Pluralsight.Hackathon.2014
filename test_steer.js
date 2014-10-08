@@ -3,13 +3,13 @@
  */
 var steer = require('./steer.js');
 var maxAngle = 180;
-
+var speedDivisor = 5;
 
 var handleMotion = function(pos){
-    var angle =  Math.floor(
-            (Math.atan2(pos.x,-pos.z) * 180 / Math.PI) + 360) % 360;
-    var speed= Math.floor(Math.sqrt(pos.x *pos.x + pos.z * pos.z))+1;
-    console.log({angle:angle,speed:speed});
+    var heading = Math.floor(
+            (Math.atan2(pos.x,-pos.y) * 180 / Math.PI) + 360) % 360;
+    var speed= Math.floor(Math.sqrt(pos.x *pos.x + pos.y * pos.y)/speedDivisor);
+    console.log({heading:heading,speed:speed,altitude:pos.z});
 };
 
 steer.motion(handleMotion);
